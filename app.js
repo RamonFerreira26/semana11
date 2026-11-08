@@ -10,6 +10,7 @@ var produtos = [
         marca: "Samsung",
         modelo: "Galaxy A55",
         estoque: 10,
+        destaque: true,
         especificacoes: ["128 GB de armazenamento", "8 GB de memória RAM", "Tela de 6,6 polegadas"]
     },
     {
@@ -22,6 +23,7 @@ var produtos = [
         marca: "Apple",
         modelo: "iPhone 15",
         estoque: 5,
+        destaque: false,
         especificacoes: ["128 GB de armazenamento", "Câmera de 48 MP", "Tela de 6,1 polegadas"]
     },
     {
@@ -34,6 +36,7 @@ var produtos = [
         marca: "Lenovo",
         modelo: "IdeaPad",
         estoque: 7,
+        destaque: true,
         especificacoes: ["8 GB de memória RAM", "SSD de 256 GB", "Tela de 15,6 polegadas"]
     },
     {
@@ -46,6 +49,7 @@ var produtos = [
         marca: "Acer",
         modelo: "Nitro",
         estoque: 4,
+        destaque: false,
         especificacoes: ["16 GB de memória RAM", "SSD de 512 GB", "Placa de vídeo dedicada"]
     },
     {
@@ -58,6 +62,7 @@ var produtos = [
         marca: "JBL",
         modelo: "Tune",
         estoque: 20,
+        destaque: false,
         especificacoes: ["Conexão Bluetooth", "Bateria recarregável", "Design sem fio"]
     },
     {
@@ -70,6 +75,7 @@ var produtos = [
         marca: "Samsung",
         modelo: "Fit",
         estoque: 12,
+        destaque: false,
         especificacoes: ["Monitoramento de atividades", "Notificações", "Pulseira ajustável"]
     },
     {
@@ -77,11 +83,12 @@ var produtos = [
         nome: "Controle sem fio",
         preco: 249.90,
         categoria: "Games",
-        imagem: "https://tse3.mm.bing.net/th/id/OIP.ZTcNpyfR9vMpLzlK2kv0CwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3https://placehold.co/300x200?text=Controle",
+        imagem: "https://tse3.mm.bing.net/th/id/OIP.ZTcNpyfR9vMpLzlK2kv0CwHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
         descricao: "Controle sem fio para jogar no computador.",
         marca: "Logitech",
         modelo: "F310",
         estoque: 9,
+        destaque: false,
         especificacoes: ["Conexão USB", "Design ergonômico", "Compatível com computador"]
     },
     {
@@ -94,9 +101,17 @@ var produtos = [
         marca: "Sony",
         modelo: "PlayStation 5",
         estoque: 3,
+        destaque: true,
         especificacoes: ["Armazenamento SSD", "Jogos em alta resolução", "Controle sem fio"]
     }
 ];
+
+var aluno = {
+    nome: "Ramon Ferreira",
+    curso: "Análise e Desenvolvimento de Sistemas",
+    projeto: "EletronicMania",
+    descricao: "Desenvolvimento de uma loja virtual de produtos eletrônicos utilizando HTML, CSS e JavaScript."
+};
 
 function formatarPreco(preco) {
     return preco.toLocaleString("pt-BR", {
@@ -105,91 +120,129 @@ function formatarPreco(preco) {
     });
 }
 
+function mostrarDestaques() {
+    var areaDestaques = document.getElementById("destaques");
+    if (areaDestaques == null) {
+        return;
+    }
+    areaDestaques.innerHTML = "";
+    var contador = 0;
+    for (var i = 0; i < produtos.length; i++) {
+        if (produtos[i].destaque == true) {
+            var produto = produtos[i];
+            var item = document.createElement("div");
+            item.className = "carousel-item";
+            if (contador == 0) {
+                item.classList.add("active");
+            }
+            item.innerHTML = `
+                <div class="destaque-item">
+                    <img src="${produto.imagem}" alt="${produto.nome}">
+                    <div class="destaque-texto">
+                        <h3>${produto.nome}</h3>
+                        <p>${produto.descricao}</p>
+                        <p class="preco">
+                            ${formatarPreco(produto.preco)}
+                        </p>
+                        <a href="detalhes.html?id=${produto.id}">
+                            Ver detalhes
+                        </a>
+                    </div>
+                </div>
+            `;
+            areaDestaques.appendChild(item);
+            contador++;
+        }
+    }
+}
+
 function mostrarProdutos(lista) {
     var catalogo = document.getElementById("catalogo");
-
     if (catalogo == null) {
         return;
     }
-
     catalogo.innerHTML = "";
-
     for (var i = 0; i < lista.length; i++) {
         var produto = lista[i];
-
         var card = document.createElement("div");
         card.className = "produto";
-
         card.innerHTML = `
             <img src="${produto.imagem}" alt="${produto.nome}">
             <h3>${produto.nome}</h3>
             <p>${produto.categoria}</p>
-            <p class="preco">${formatarPreco(produto.preco)}</p>
-            <a href="detalhes.html?id=${produto.id}">Ver detalhes</a>
+            <p class="preco">
+                ${formatarPreco(produto.preco)}
+            </p>
+            <a href="detalhes.html?id=${produto.id}">
+                Ver detalhes
+            </a>
         `;
-
         catalogo.appendChild(card);
     }
-
     if (lista.length == 0) {
         catalogo.innerHTML = "<p>Nenhum produto encontrado.</p>";
     }
 }
+
 function buscarProdutos() {
     var campoBusca = document.getElementById("busca");
-
     if (campoBusca == null) {
         return;
     }
-
     var texto = campoBusca.value.toLowerCase();
     var encontrados = [];
-
     for (var i = 0; i < produtos.length; i++) {
         if (produtos[i].nome.toLowerCase().includes(texto)) {
             encontrados.push(produtos[i]);
         }
     }
-
     mostrarProdutos(encontrados);
+}
+
+function mostrarAluno() {
+    var areaAluno = document.getElementById("informacoesAluno");
+    if (areaAluno == null) {
+        return;
+    }
+    areaAluno.innerHTML = `
+        <h3>${aluno.nome}</h3>
+        <p><strong>Curso:</strong> ${aluno.curso}</p>
+        <p><strong>Projeto:</strong> ${aluno.projeto}</p>
+        <p>${aluno.descricao}</p>
+    `;
 }
 
 function mostrarDetalhes() {
     var areaDetalhes = document.getElementById("detalhes");
-
     if (areaDetalhes == null) {
         return;
     }
-
     var parametros = new URLSearchParams(window.location.search);
     var id = Number(parametros.get("id"));
     var produtoEscolhido = null;
-
     for (var i = 0; i < produtos.length; i++) {
         if (produtos[i].id == id) {
             produtoEscolhido = produtos[i];
             break;
         }
     }
-
     if (produtoEscolhido == null) {
         areaDetalhes.innerHTML = "<h2>Produto não encontrado.</h2>";
         return;
     }
-
     var listaEspecificacoes = "";
-
     for (var i = 0; i < produtoEscolhido.especificacoes.length; i++) {
         listaEspecificacoes += "<li>" +
             produtoEscolhido.especificacoes[i] +
             "</li>";
     }
-
     areaDetalhes.innerHTML = `
         <img src="${produtoEscolhido.imagem}" alt="${produtoEscolhido.nome}">
         <h2>${produtoEscolhido.nome}</h2>
         <p>${produtoEscolhido.descricao}</p>
-        <p class="preco">${formatarPreco(produtoEscolhido.preco)}</p>
+        <p class="preco">
+            ${formatarPreco(produtoEscolhido.preco)}
+        </p>
         <p><strong>Categoria:</strong> ${produtoEscolhido.categoria}</p>
         <p><strong>Marca:</strong> ${produtoEscolhido.marca}</p>
         <p><strong>Modelo:</strong> ${produtoEscolhido.modelo}</p>
@@ -198,13 +251,12 @@ function mostrarDetalhes() {
         <ul>${listaEspecificacoes}</ul>
     `;
 }
-
 if (document.getElementById("catalogo") != null) {
+    mostrarDestaques();
     mostrarProdutos(produtos);
-
+    mostrarAluno();
     document.getElementById("busca").addEventListener("input", buscarProdutos);
 }
-
 if (document.getElementById("detalhes") != null) {
     mostrarDetalhes();
 }

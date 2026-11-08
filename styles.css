@@ -11,17 +11,32 @@ body {
 }
 
 header {
-    display: flex;
-    flex-direction:column;
-    align-items:start;
     background-color: #24a129;
     color: white;
-    text-align: center;
     padding: 20px;
 }
 
-header h1 {
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    background-color: white;
+    color: #24a129;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.logo h1 {
     margin: 0;
+}
+
+.logo p {
+    margin: 5px 0 0;
 }
 
 main {
@@ -31,12 +46,74 @@ main {
     min-height: 400px;
 }
 
+main h2 {
+    margin-bottom: 20px;
+}
+
+.secao-destaques {
+    margin-bottom: 45px;
+}
+
+#destaqueCarousel {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px #ccc;
+}
+
+.destaque-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px 70px;
+    min-height: 300px;
+}
+
+.destaque-item img {
+    width: 45%;
+    height: 250px;
+    object-fit: contain;
+}
+
+.destaque-texto {
+    flex: 1;
+}
+
+.destaque-texto h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.destaque-texto a {
+    display: inline-block;
+    background-color: #24a129;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.destaque-texto a:hover {
+    background-color: #237726;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 6%;
+    background-color: rgba(143, 140, 140, 0.479);
+}
+
 #busca {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.secao-catalogo {
+    margin-bottom: 50px;
 }
 
 .catalogo {
@@ -85,6 +162,22 @@ main {
     background-color: #237726;
 }
 
+.secao-aluno {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #ccc;
+    margin-bottom: 40px;
+}
+
+.secao-aluno h2 {
+    color: #24a129;
+}
+
+.secao-aluno h3 {
+    margin-top: 15px;
+}
+
 #detalhes {
     background-color: white;
     padding: 25px;
@@ -114,11 +207,96 @@ footer {
 }
 
 @media (max-width: 600px) {
+
     main {
         width: 94%;
     }
 
+    .logo h1 {
+        font-size: 24px;
+    }
+
+    .destaque-item {
+        flex-direction: column;
+        padding: 25px 45px;
+        text-align: center;
+    }
+
+    .destaque-item img {
+        width: 100%;
+        height: 180px;
+    }
+
+    .destaque-texto h3 {
+        font-size: 20px;
+    }
+
     #detalhes {
         padding: 15px;
+    }
+
+    .secao-aluno {
+        padding: 15px;
+    }
+}
+
+.detalhe {
+    display: flex;
+    gap: 30px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #ccc;
+}
+
+.detalhe-img {
+    width: 45%;
+}
+
+.detalhe-img img {
+    width: 100%;
+    height: 350px;
+    object-fit: contain;
+}
+
+.detalhe-info {
+    width: 55%;
+}
+
+.detalhe-info h2 {
+    margin-top: 0;
+}
+
+.detalhe-info .preco {
+    font-size: 26px;
+}
+
+.info {
+    background-color: #f2f2f2;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.info p {
+    margin: 8px 0;
+}
+
+.detalhe-info li {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    .detalhe {
+        flex-direction: column;
+    }
+
+    .detalhe-img,
+    .detalhe-info {
+        width: 100%;
+    }
+
+    .detalhe-img img {
+        height: 250px;
     }
 }
